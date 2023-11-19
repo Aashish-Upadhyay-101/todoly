@@ -1,0 +1,26 @@
+{
+  "name": "todoly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "eslint . --ext .ts --ignore-path .eslintignore",
+    "lint-and-fix": "eslint . --ext .ts --fix",
+    "prettier-format": "prettier --write . --ignore-path .gitignore"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.2",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "eslint": "^8.54.0",
+    "prettier": "^3.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

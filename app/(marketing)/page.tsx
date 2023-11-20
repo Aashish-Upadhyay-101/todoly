@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Medal } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { UserButton } from "@clerk/nextjs";
 
 const headingFont = localFont({
   src: "../../public/fonts/calcom.woff2",

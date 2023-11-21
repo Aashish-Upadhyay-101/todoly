@@ -7,6 +7,7 @@ import { useOrganization, useOrganizationList } from "@clerk/nextjs";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { useLocalStorage } from "usehooks-ts";
+import NavItem, { Organization } from "./nav-item";
 
 interface SidebarProps {
   storageKey?: string;
@@ -69,7 +70,13 @@ export default function Sidebar({
         defaultValue={defaultAccordionValue}
         className="space-y-2">
         {userMemberships.data.map(({ organization }) => (
-          <p>{organization.name}</p>
+          <NavItem
+            key={organization.id}
+            isActive={activeOrganization?.id === organization.id}
+            isExpanded={expanded[organization.id]}
+            organization={organization as Organization}
+            onExpand={onExpand}
+          />
         ))}
       </Accordion>
     </>

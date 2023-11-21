@@ -48,11 +48,7 @@ export default function Sidebar({
   };
 
   if (!isLoadedOrg || !isLoadedOrgList || userMemberships.isLoading) {
-    return (
-      <>
-        <Skeleton className="h-6 w-24" />
-      </>
-    );
+    return <SidebarSkeleton />;
   }
 
   return (
@@ -82,3 +78,28 @@ export default function Sidebar({
     </>
   );
 }
+
+const SidebarSkeleton = function () {
+  return (
+    <>
+      <div className="flex items-center justify-between">
+        <Skeleton className="h-10 w-[50%]" />
+        <Skeleton className="h-10 w-10" />
+      </div>
+      <div className="space-y-2 mt-2">
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-10 w-10" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-10 w-10" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-10 w-10" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+      </div>
+    </>
+  );
+};

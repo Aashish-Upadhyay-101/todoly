@@ -3,6 +3,7 @@ import MobileSidebar from "./mobile-sidebar";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import FormPopover from "@/components/form/form-popover";
 
 export default function Navbar() {
   return (
@@ -13,12 +14,18 @@ export default function Navbar() {
         <div className="hidden md:flex">
           <Logo />
         </div>
-        <Button className="rounded-sm hidden md:block h-auto py-1.5 px-2">
-          Create
-        </Button>
-        <Button className="rounded-sm md:hidden block">
-          <Plus className="w-4 h-4" />
-        </Button>
+        <FormPopover align="start" side="bottom" sideOffset={18}>
+          <Button
+            variant={"primary"}
+            className="rounded-sm hidden md:block h-auto py-1.5 px-2">
+            Create
+          </Button>
+        </FormPopover>
+        <FormPopover>
+          <Button variant={"primary"} className="rounded-sm md:hidden block">
+            <Plus className="w-4 h-4" />
+          </Button>
+        </FormPopover>
       </div>
       <div className="ml-auto flex items-center gap-x-2">
         <OrganizationSwitcher

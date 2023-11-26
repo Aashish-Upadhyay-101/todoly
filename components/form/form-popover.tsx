@@ -1,19 +1,21 @@
 "use client";
 
+import { ElementRef, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import FormPicker from "./form-picker";
+import { useAction } from "@/hooks/use-action";
+import { createBoard } from "@/actions/create-board";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
+import { FormInput } from "@/components/form/form-input";
+import FormSubmit from "@/components/form/form-submit";
 import {
   Popover,
   PopoverClose,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import { FormInput } from "@/components/form/form-input";
-import FormSubmit from "@/components/form/form-submit";
-import { useAction } from "@/hooks/use-action";
-import { createBoard } from "@/actions/create-board";
-import { toast } from "sonner";
-import FormPicker from "./form-picker";
 
 interface FormPopoverProps {
   children: React.ReactNode;
@@ -28,9 +30,14 @@ export default function FormPopover({
   sideOffset = 0,
   align,
 }: FormPopoverProps) {
+  const closeRef = useRef<ElementRef<"button">>(null);
+  const router = useRouter();
+
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
       toast.success("Board created!");
+      closeRef.current?.click();
+      router.push(`/board/${data.id}`);
     },
 
     onError: (error) => {
@@ -42,7 +49,7 @@ export default function FormPopover({
     const title = formData.get("title") as string;
     const image = formData.get("image") as string;
 
-    execute({ title });
+    execute({ title, image });
   };
 
   return (
@@ -52,12 +59,12 @@ export default function FormPopover({
         align={align}
         side={side}
         sideOffset={sideOffset}
-        className="w-80 pt-3">
+        className="w-64 md:w-80 pt-3">
         <div className="text-sm font-medium text-center text-neutral-600 pb-4">
           Create Board
         </div>
 
-        <PopoverClose asChild>
+        <PopoverClose ref={closeRef} asChild>
           <Button
             className="h-auto w-auto p-2 absolute top-2 right-2 text-neutral-600"
             variant={"ghost"}>

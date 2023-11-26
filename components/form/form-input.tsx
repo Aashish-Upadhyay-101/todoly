@@ -5,6 +5,7 @@ import { useFormStatus } from "react-dom";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { FormError } from "./form-error";
 
 interface FormInputProps {
   id: string;
@@ -51,6 +52,7 @@ export const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
 
           <Input
             id={id}
+            name={id}
             ref={ref}
             type={type}
             placeholder={placeholder}

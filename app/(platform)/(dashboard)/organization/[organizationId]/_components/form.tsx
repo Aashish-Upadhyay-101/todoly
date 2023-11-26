@@ -1,13 +1,17 @@
 "use client";
 
 import { createBoard } from "@/actions/create-board";
+import { FormInput } from "@/components/form/form-input";
+import { Button } from "@/components/ui/button";
 import { useAction } from "@/hooks/use-action";
-import { useFormState } from "react-dom";
 
 export function Form() {
   const { execute, fieldErrors } = useAction(createBoard, {
     onError: (error) => {
       console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
     },
   });
 
@@ -19,19 +23,8 @@ export function Form() {
 
   return (
     <form action={onSubmit}>
-      <input
-        id="title"
-        name="title"
-        placeholder="Enter your board name"
-        className="border p-1 rounded-lg outline-gray-300"
-        required
-      />
-
-      {fieldErrors?.title?.map((error) => (
-        <div className="mt-2">
-          <p className="text-red-500">{error}</p>
-        </div>
-      ))}
+      <FormInput id="title" label="Board Title" errors={fieldErrors} />
+      <Button type={"submit"}>Save</Button>
     </form>
   );
 }

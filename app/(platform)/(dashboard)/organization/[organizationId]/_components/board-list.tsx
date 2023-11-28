@@ -43,7 +43,7 @@ export default async function BoardList() {
             role="button"
             className="flex flex-col items-center justify-center hover:opacity-75 transition rounded-sm h-full w-full bg-muted gap-y-1 aspect-video relative">
             <p className="text-sm">Create new board</p>
-            <span className="text-xs text-muted-foreground">5 remaining</span>
+            <span className="text-xs text-muted-foreground">1 remaining</span>
             <Hint
               description={`Free Workspace can have up to 5 boards. For unlimited boards upgrade this workspace`}
               side="bottom"

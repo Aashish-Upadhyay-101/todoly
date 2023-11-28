@@ -20,6 +20,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         primary:
           "transition-all text-white bg-gradient-to-r from-slate-700 to-pink-700 hover:from-pink-700 hover:to-slate-700 duration-300",
+        transparent: "bg-transparent text-white hover:bg-white/20",
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -7,12 +7,14 @@ import { FormInput } from "@/components/form/form-input";
 import { useAction } from "@/hooks/use-action";
 import { updateList } from "@/actions/update-list";
 import { toast } from "sonner";
+import ListOptions from "./list-options";
 
 interface ListheaderProps {
   list: List;
+  onAddCard: () => void;
 }
 
-export default function ListHeader({ list }: ListheaderProps) {
+export default function ListHeader({ list, onAddCard }: ListheaderProps) {
   const [title, setTitle] = useState<string>(list.title);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
@@ -101,6 +103,7 @@ export default function ListHeader({ list }: ListheaderProps) {
           {title}
         </div>
       )}
+      <ListOptions list={list} onAddCard={onAddCard} />
     </div>
   );
 }

@@ -5,6 +5,10 @@ import ListForm from "./list-form";
 import { useEffect, useState } from "react";
 import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
 import ListItem from "./list-item";
+import { useAction } from "@/hooks/use-action";
+import { updateListOrder } from "@/actions/update-list-order";
+import { toast } from "sonner";
+import { updateCardOrder } from "@/actions/update-card-order";
 
 interface ListContainerProps {
   boardId: string;
@@ -21,6 +25,24 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 
 export default function ListContainer({ boardId, lists }: ListContainerProps) {
   const [orderedData, setOrderedData] = useState<ListWithCards[]>(lists);
+
+  const { execute: executeUpdateListOrder } = useAction(updateListOrder, {
+    onSuccess: (data) => {
+      toast.success("List reordered");
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
+  const { execute: executeUpdateCardOrder } = useAction(updateCardOrder, {
+    onSuccess: (data) => {
+      toast.success("Cards reordered");
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
 
   useEffect(() => {
     setOrderedData(lists);
@@ -48,8 +70,7 @@ export default function ListContainer({ boardId, lists }: ListContainerProps) {
       );
 
       setOrderedData(items);
-
-      // TODO: server action to save the new order
+      executeUpdateListOrder({ boardId, items });
     }
 
     // user move card of the list
@@ -90,7 +111,10 @@ export default function ListContainer({ boardId, lists }: ListContainerProps) {
 
         sourceList.cards = reorderedCards;
         setOrderedData(newOrderedData);
-        // TODO: trigger server action of this case
+        executeUpdateCardOrder({
+          boardId,
+          items: reorderedCards,
+        });
       } else {
         // move the card to another list
 
@@ -103,15 +127,19 @@ export default function ListContainer({ boardId, lists }: ListContainerProps) {
         });
 
         // assign new listId to the moved card
-        movedCard.listId === destination.droppableId;
+        movedCard.listId = destination.droppableId;
 
         // add the card to the destination list
-        destinationList.cards
-          .splice(destination.index, 0, movedCard)
-          .map((card, index) => ({ ...card, order: index }));
+        destinationList.cards.splice(destination.index, 0, movedCard);
+
+        // change the order in the destination list
+        destinationList.cards.forEach((card, index) => {
+          card.order = index;
+        });
+
         setOrderedData(newOrderedData);
 
-        // TODO: trigger server action for this case
+        executeUpdateCardOrder({ boardId, items: destinationList.cards });
       }
     }
   };

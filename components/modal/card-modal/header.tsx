@@ -20,7 +20,7 @@ export const Header = ({ data }: HeaderProps) => {
   const queryClient = useQueryClient();
   const params = useParams();
 
-  const { execute: executeUpdateCard, fieldErrors } = useAction(updateCard, {
+  const { execute: executeUpdateCard } = useAction(updateCard, {
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: ["card", data.id],

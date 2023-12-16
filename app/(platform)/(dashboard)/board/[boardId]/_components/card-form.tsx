@@ -71,8 +71,13 @@ export const CardForm = React.forwardRef<HTMLTextAreaElement, CardFormProps>(
             placeholder="Enter a title for this card..."
             className="w-full px-1 py-0.5 rounded-md"
           />
-          <input hidden id="listId" name="listId" value={listId} />
-          <input hidden id="boardId" name="boardId" value={params.boardId} />
+          <input hidden id="listId" name="listId" defaultValue={listId} />
+          <input
+            hidden
+            id="boardId"
+            name="boardId"
+            defaultValue={params.boardId}
+          />
           <div className="flex items-center gap-x-1">
             <FormSubmit>Add card</FormSubmit>
             <Button onClick={disableEditing} variant={"ghost"} size={"sm"}>

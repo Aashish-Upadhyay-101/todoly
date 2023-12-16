@@ -25,6 +25,9 @@ export const Header = ({ data }: HeaderProps) => {
       queryClient.invalidateQueries({
         queryKey: ["card", data.id],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["card-logs", data.id],
+      });
       toast.success(`Card ${data.title} renamed`);
       setTitle(data.title);
     },
@@ -61,7 +64,7 @@ export const Header = ({ data }: HeaderProps) => {
             defaultValue={title}
             className="font-semibold text-xl px-1 text-neutral-700 bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-white focus-visible:border-input truncate"
           />
-          <input hidden id="cardId" name="cardId" value={data.id} />
+          <input hidden id="cardId" name="cardId" defaultValue={data.id} />
           <button hidden type="submit" />
         </form>
         <p className="text-sm text-muted-foreground mt-1">

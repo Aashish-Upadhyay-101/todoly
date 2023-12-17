@@ -16,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 interface FormPopoverProps {
   children: React.ReactNode;
@@ -33,6 +34,8 @@ export default function FormPopover({
   const closeRef = useRef<ElementRef<"button">>(null);
   const router = useRouter();
 
+  const proModal = useProModal();
+
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
       toast.success("Board created!");
@@ -42,6 +45,7 @@ export default function FormPopover({
 
     onError: (error) => {
       toast.error(error);
+      proModal.onOpen();
     },
   });
 

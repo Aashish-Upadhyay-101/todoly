@@ -1,7 +1,10 @@
 import FormPopover from "@/components/form/form-popover";
 import Hint from "@/components/hint";
 import { Skeleton } from "@/components/ui/skeleton";
+import { MAX_FREE_BOARDS } from "@/constants/boards";
 import { db } from "@/lib/db";
+import { getAvailableCount } from "@/lib/org-limit";
+import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs";
 import { HelpCircle, User2 } from "lucide-react";
 import Link from "next/link";
@@ -23,6 +26,9 @@ export default async function BoardList() {
     },
   });
 
+  const availableCount = await getAvailableCount();
+  const isPro = await checkSubscription();
+
   return (
     <div className="space-y-4">
       <div className="flex items-center font-semibold text-neutral-700 text-lg">
@@ -43,7 +49,11 @@ export default async function BoardList() {
             role="button"
             className="flex flex-col items-center justify-center hover:opacity-75 transition rounded-sm h-full w-full bg-muted gap-y-1 aspect-video relative">
             <p className="text-sm">Create new board</p>
-            <span className="text-xs text-muted-foreground">1 remaining</span>
+            <span className="text-xs text-muted-foreground">
+              {isPro
+                ? "Unlimited"
+                : `${MAX_FREE_BOARDS - availableCount} remaining`}
+            </span>
             <Hint
               description={`Free Workspace can have up to 5 boards. For unlimited boards upgrade this workspace`}
               side="bottom"
